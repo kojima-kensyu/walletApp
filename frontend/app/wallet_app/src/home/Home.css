@@ -1,0 +1,14 @@
+.container{
+    height: 100%;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.container a{
+    color: #AE9890;
+}
+p{
+    color: #AE9890;   
+}
+h1{
+    color: #FFC679;
+}

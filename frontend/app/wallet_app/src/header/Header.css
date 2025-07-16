@@ -1,0 +1,11 @@
+.header{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr)
+}
+.side_menu{
+    grid-column: 1/1;
+}
+.title{
+    font-size: 10px;
+    font-family: fantasy;
+}
