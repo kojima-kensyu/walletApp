@@ -1,0 +1,50 @@
+#version: '3'
+services: 
+  frontend:
+    tty: true
+    stdin_open: true
+    container_name: wallet-front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - ./frontend/app/wallet_app:/app
+      - /app/node_modules
+    depends_on: 
+      - server
+    # command: npm start
+
+  server:
+    tty: true
+    stdin_open: true
+    container_name: wallet-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports: 
+      - "3001:3001"
+    volumes: 
+      - ./server/app:/app
+      - /app/node_modules
+    depends_on: 
+      - db
+    env_file: 
+      - ./server/.env
+    command: npm start
+
+  db:
+    container_name: wallet-db
+    env_file: 
+      - ./db/.env
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - ./db/data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/conf:/etc/mysql/conf.d
